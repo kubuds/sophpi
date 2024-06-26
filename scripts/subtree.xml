@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-    <remote name="origin" fetch="git@github.com:sophgo/" review="git@github.com:sophgo/"/>
+    <remote name="origin" fetch="git@github.com:kubuds/" review="git@github.com:kubuds/"/>
     <default revision="sg200x-dev" remote="origin" sync-j="4"/>
 
     <project name="host-tools" revision="master"/>
-    <project name="build"/>
+    <project name="build" revision="develop"/>
     <project name="freertos" path="freertos"/>
     <project name="FreeRTOS-Kernel" path="freertos/Source"/>
     <project name="Lab-Project-FreeRTOS-POSIX" path="freertos/Source/FreeRTOS-Plus-POSIX"/>
     <project name="fsbl"/>
     <project name="opensbi"/>
     <project name="u-boot-2021.10"/>
-    <project name="linux_5.10"/>
-    <project name="osdrv"/>
+    <project name="linux_5.10" revision="develop"/>
+    <project name="osdrv" revision="develop"/>
     <project name="ramdisk"/>
     <project name="oss" revision="master"/>
     <project name="cvi_rtsp" revision="master"/>
