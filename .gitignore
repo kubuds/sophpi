@@ -10,6 +10,7 @@ osdrv
 ramdisk
 u-boot-2021.10
 buildroot-2021.05
+buildroot
 oss
 cviruntime
 cvikernel
