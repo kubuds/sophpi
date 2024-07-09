@@ -12,7 +12,7 @@
     <project name="opensbi"/>
     <project name="u-boot-2021.10"/>
     <project name="linux_5.10" revision="develop"/>
-    <project name="osdrv" revision="develop"/>
+    <project name="osdrv" revision="pikvm"/>
     <project name="ramdisk"/>
     <project name="oss" revision="master"/>
     <project name="middleware" revision="develop"/>
