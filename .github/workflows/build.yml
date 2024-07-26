@@ -1,0 +1,44 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - sg200x-dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: checkout_actions
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: setup python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Install Dependencies
+      run: |
+        sudo apt-get install ninja-build device-tree-compiler
+        pip3 install sphinx sphinx-copybutton sphinx_multiversion sphinx_rtd_theme
+
+    - name: Build
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      id: package-build
+      run: |
+        set -e
+        echo $PWD
+        echo $GITHUB_WORKSPACE
+        cd $GITHUB_WORKSPACE
+        sed -i 's/git@github.com:sophgo/https:\/\/github.com\/sophgo/g' scripts/subtree.xml
+        ./scripts/repo_clone.sh --gitclone scripts/subtree.xml
+        source build/cvisetup.sh
+        defconfig sg2002_wevb_riscv64_sd
+        clean_all
+        build_all
