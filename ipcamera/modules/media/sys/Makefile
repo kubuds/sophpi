@@ -1,0 +1,10 @@
+include $(SRCTREE)/build/rule.mk
+TARGET_DIR := $(TARGET_OUT_DIR)/lib
+TARGET_A := $(TARGET_DIR)/libapp_media_sys.a
+
+SEXT	:= c
+SDIR	+= $(CURDIR)/src
+#DEPEND
+INCS									+= -I$(CURDIR)/include
+
+include $(SRCTREE)/build/build.mk
