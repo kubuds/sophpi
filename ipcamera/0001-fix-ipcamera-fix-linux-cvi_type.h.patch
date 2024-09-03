@@ -1,0 +1,242 @@
+From af8f2193fb2a2ee5536ca667fb848b4c46a888a0 Mon Sep 17 00:00:00 2001
+From: "songpei.lu" <songpei.lu@sophgo.com>
+Date: Wed, 7 Aug 2024 19:21:50 +0800
+Subject: [PATCH] [fix](ipcamera): fix linux/cvi_type.h
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+[Description ]:
+1、only use linux/cvi_type.h from osdrv/interdrv/v2/include
+
+Change-Id: Icf0e0bb12bdb4a77ebe0a98107c108b223917819
+---
+ modules/ai/include/app_ipcam_ai.h                | 2 +-
+ modules/ai/md/include/app_ipcam_md.h             | 2 +-
+ modules/media/audio/include/cvi_aacdec.h         | 2 +-
+ modules/media/audio/include/cvi_audio_dl_adp.h   | 2 +-
+ modules/media/include/audio/app_ipcam_audio.h    | 3 ++-
+ modules/media/include/audio/cvi_aacenc.h         | 2 +-
+ modules/media/include/audio/cvi_audio_aac_adp.h  | 2 +-
+ modules/media/include/osd/app_ipcam_osd.h        | 2 +-
+ modules/media/osd/include/app_ipcam_loadbmp.h    | 2 +-
+ modules/media/sys/src/app_ipcam_sys.c            | 2 +-
+ modules/media/venc/src/app_ipcam_venc.c          | 2 +-
+ modules/peripheral/adc/src/app_ipcam_adc.c       | 2 +-
+ modules/peripheral/gpio/include/app_ipcam_gpio.h | 2 +-
+ modules/peripheral/ircut/src/app_ipcam_ircut.c   | 2 +-
+ modules/peripheral/pwm/src/app_ipcam_pwm.c       | 2 +-
+ modules/protocol/rtsp/include/app_ipcam_rtsp.h   | 2 +-
+ 16 files changed, 17 insertions(+), 16 deletions(-)
+
+diff --git a/modules/ai/include/app_ipcam_ai.h b/modules/ai/include/app_ipcam_ai.h
+index 7005383..e08cb51 100644
+--- a/modules/ai/include/app_ipcam_ai.h
++++ b/modules/ai/include/app_ipcam_ai.h
+@@ -1,7 +1,7 @@
+ #ifndef __APP_IPCAM_AI_H__
+ #define __APP_IPCAM_AI_H__
+ 
+-#include "cvi_type.h"
++#include "linux/cvi_type.h"
+ #if defined(CVI_TDL_SUPPORT)
+ #include "cvi_tdl.h"
+ #include "cvi_tdl_app.h"
+diff --git a/modules/ai/md/include/app_ipcam_md.h b/modules/ai/md/include/app_ipcam_md.h
+index 6716bca..f914b4c 100644
+--- a/modules/ai/md/include/app_ipcam_md.h
++++ b/modules/ai/md/include/app_ipcam_md.h
+@@ -1,7 +1,7 @@
+ #ifndef __APP_IPCAM_MD_H__
+ #define __APP_IPCAM_MD_H__
+ 
+-#include "cvi_type.h"
++#include "linux/cvi_type.h"
+ #include "linux/cvi_comm_video.h"
+ #include "cvi_vpss.h"
+ #include "app_ipcam_comm.h"
+diff --git a/modules/media/audio/include/cvi_aacdec.h b/modules/media/audio/include/cvi_aacdec.h
+index 54e9379..0de16b3 100755
+--- a/modules/media/audio/include/cvi_aacdec.h
++++ b/modules/media/audio/include/cvi_aacdec.h
+@@ -21,7 +21,7 @@ extern "C"
+ #endif
+ #endif
+ 
+-#include "cvi_type.h"
++#include "linux/cvi_type.h"
+ 
+     /********************************Macro Definition********************************/
+     /** \addtogroup      AACDEC */
+diff --git a/modules/media/audio/include/cvi_audio_dl_adp.h b/modules/media/audio/include/cvi_audio_dl_adp.h
+index 4c5287b..8e20609 100644
+--- a/modules/media/audio/include/cvi_audio_dl_adp.h
++++ b/modules/media/audio/include/cvi_audio_dl_adp.h
+@@ -1,7 +1,7 @@
+ #ifndef __CVI_AUDIO_DL_ADP_H__
+ #define __CVI_AUDIO_DL_ADP_H__
+ 
+-#include "cvi_type.h"
++#include "linux/cvi_type.h"
+ 
+ CVI_S32 CVI_Audio_Dlpath(CVI_CHAR *pChLibPath);
+ 
+diff --git a/modules/media/include/audio/app_ipcam_audio.h b/modules/media/include/audio/app_ipcam_audio.h
+index 13f2282..883702d 100644
+--- a/modules/media/include/audio/app_ipcam_audio.h
++++ b/modules/media/include/audio/app_ipcam_audio.h
+@@ -1,7 +1,8 @@
+ #ifndef __APP_IPCAM_AUDIO_H__
+ #define __APP_IPCAM_AUDIO_H__
+ 
+-#include "cvi_type.h"
++#include <stdbool.h>
++#include "linux/cvi_type.h"
+ #include "cvi_comm_aio.h"
+ 
+ #ifdef __cplusplus
+diff --git a/modules/media/include/audio/cvi_aacenc.h b/modules/media/include/audio/cvi_aacenc.h
+index 3875ebc..c3ae5b4 100755
+--- a/modules/media/include/audio/cvi_aacenc.h
++++ b/modules/media/include/audio/cvi_aacenc.h
+@@ -19,7 +19,7 @@ extern "C" {
+ #endif
+ #endif
+ 
+-#include "cvi_type.h"
++#include "linux/cvi_type.h"
+ 
+ /********************************Macro Definition********************************/
+ /** \addtogroup      AACENC */
+diff --git a/modules/media/include/audio/cvi_audio_aac_adp.h b/modules/media/include/audio/cvi_audio_aac_adp.h
+index 756d8c0..d93e1a7 100644
+--- a/modules/media/include/audio/cvi_audio_aac_adp.h
++++ b/modules/media/include/audio/cvi_audio_aac_adp.h
+@@ -10,7 +10,7 @@
+ 
+ #include <stdio.h>
+ #include "cvi_comm_aio.h"
+-#include "cvi_type.h"
++#include "linux/cvi_type.h"
+ #include "cvi_audio.h"
+ #include "cvi_comm_aenc.h"
+ #include "cvi_comm_adec.h"
+diff --git a/modules/media/include/osd/app_ipcam_osd.h b/modules/media/include/osd/app_ipcam_osd.h
+index efefce9..3b1917b 100644
+--- a/modules/media/include/osd/app_ipcam_osd.h
++++ b/modules/media/include/osd/app_ipcam_osd.h
+@@ -2,7 +2,7 @@
+ #define __APP_IPCAM_OSD_H__
+ 
+ #include <stdbool.h>
+-#include "cvi_type.h"
++#include "linux/cvi_type.h"
+ #include "linux/cvi_comm_region.h"
+ #include "cvi_region.h"
+ 
+diff --git a/modules/media/osd/include/app_ipcam_loadbmp.h b/modules/media/osd/include/app_ipcam_loadbmp.h
+index cf5cf62..715e7ba 100644
+--- a/modules/media/osd/include/app_ipcam_loadbmp.h
++++ b/modules/media/osd/include/app_ipcam_loadbmp.h
+@@ -1,7 +1,7 @@
+ #ifndef __APP_IPCAM_LOADBMP_H__
+ #define __APP_IPCAM_LOADBMP_H__
+ 
+-#include "cvi_type.h"
++#include "linux/cvi_type.h"
+ 
+ #ifdef __cplusplus
+ #if __cplusplus
+diff --git a/modules/media/sys/src/app_ipcam_sys.c b/modules/media/sys/src/app_ipcam_sys.c
+index 53c53d2..e74804b 100644
+--- a/modules/media/sys/src/app_ipcam_sys.c
++++ b/modules/media/sys/src/app_ipcam_sys.c
+@@ -1,7 +1,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <signal.h>
+-#include "cvi_type.h"
++#include "linux/cvi_type.h"
+ #include "cvi_vb.h"
+ #include "cvi_buffer.h"
+ #include "app_ipcam_comm.h"
+diff --git a/modules/media/venc/src/app_ipcam_venc.c b/modules/media/venc/src/app_ipcam_venc.c
+index 869e072..6037df5 100644
+--- a/modules/media/venc/src/app_ipcam_venc.c
++++ b/modules/media/venc/src/app_ipcam_venc.c
+@@ -6,7 +6,7 @@
+ #include <stdlib.h>
+ #include "cvi_vpss.h"
+ #include "errno.h"
+-#include "cvi_type.h"
++#include "linux/cvi_type.h"
+ #include "cvi_ae.h"
+ #include "app_ipcam_comm.h"
+ #include "app_ipcam_sys.h"
+diff --git a/modules/peripheral/adc/src/app_ipcam_adc.c b/modules/peripheral/adc/src/app_ipcam_adc.c
+index f98be14..6c7305b 100644
+--- a/modules/peripheral/adc/src/app_ipcam_adc.c
++++ b/modules/peripheral/adc/src/app_ipcam_adc.c
+@@ -5,7 +5,7 @@
+ #include <unistd.h>
+ #include <fcntl.h>
+ 
+-#include "cvi_type.h"
++#include "linux/cvi_type.h"
+ #include "app_ipcam_adc.h"
+ #include "app_ipcam_comm.h"
+ 
+diff --git a/modules/peripheral/gpio/include/app_ipcam_gpio.h b/modules/peripheral/gpio/include/app_ipcam_gpio.h
+index b477a5b..7eebab2 100644
+--- a/modules/peripheral/gpio/include/app_ipcam_gpio.h
++++ b/modules/peripheral/gpio/include/app_ipcam_gpio.h
+@@ -1,7 +1,7 @@
+ #ifndef __APP_IPCAM_GPIO_H__
+ #define __APP_IPCAM_GPIO_H__
+ 
+-#include "cvi_type.h"
++#include "linux/cvi_type.h"
+ typedef enum _CVI_GPIO_NUM_E {
+     CVI_GPIOA_00 = 480,
+     CVI_GPIOA_01,   CVI_GPIOA_02,   CVI_GPIOA_03,   CVI_GPIOA_04,   CVI_GPIOA_05,
+diff --git a/modules/peripheral/ircut/src/app_ipcam_ircut.c b/modules/peripheral/ircut/src/app_ipcam_ircut.c
+index afb7fbe..c68b5a3 100644
+--- a/modules/peripheral/ircut/src/app_ipcam_ircut.c
++++ b/modules/peripheral/ircut/src/app_ipcam_ircut.c
+@@ -1,6 +1,6 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+-#include "cvi_type.h"
++#include "linux/cvi_type.h"
+ #include "cvi_isp.h"
+ #include "cvi_comm_isp.h"
+ #include "cvi_ae.h"
+diff --git a/modules/peripheral/pwm/src/app_ipcam_pwm.c b/modules/peripheral/pwm/src/app_ipcam_pwm.c
+index 95fd873..941d05e 100644
+--- a/modules/peripheral/pwm/src/app_ipcam_pwm.c
++++ b/modules/peripheral/pwm/src/app_ipcam_pwm.c
+@@ -9,7 +9,7 @@
+ #include <sys/time.h>
+ #include <stdbool.h>
+ 
+-#include "cvi_type.h"
++#include "linux/cvi_type.h"
+ #include "app_ipcam_pwm.h"
+ #include "app_ipcam_comm.h"
+ 
+diff --git a/modules/protocol/rtsp/include/app_ipcam_rtsp.h b/modules/protocol/rtsp/include/app_ipcam_rtsp.h
+index 535e333..23bcd5a 100644
+--- a/modules/protocol/rtsp/include/app_ipcam_rtsp.h
++++ b/modules/protocol/rtsp/include/app_ipcam_rtsp.h
+@@ -5,7 +5,7 @@
+ #include "stdbool.h"
+ #include "stddef.h"
+ #include <pthread.h>
+-#include "cvi_type.h"
++#include "linux/cvi_type.h"
+ #include "linux/cvi_common.h"
+ #include "rtsp.h"
+ 
+-- 
+2.25.1
+
