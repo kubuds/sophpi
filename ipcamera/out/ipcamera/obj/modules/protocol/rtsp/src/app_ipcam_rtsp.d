@@ -1,0 +1,29 @@
+/mnt/c/sophpi/ipcamera/out/ipcamera/obj/modules/protocol/rtsp/src/app_ipcam_rtsp.o: \
+ /mnt/c/sophpi/ipcamera/modules/protocol/rtsp/src/app_ipcam_rtsp.c \
+ /mnt/c/sophpi/ipcamera/modules/protocol/rtsp/include/app_ipcam_rtsp.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/linux/cvi_type.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/linux/cvi_common.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/linux/cvi_defines.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/linux/cvi_base.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/linux/types.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/asm/types.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/asm-generic/types.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/asm-generic/int-ll64.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/asm/bitsperlong.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/asm-generic/bitsperlong.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/linux/posix_types.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/linux/stddef.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/asm/posix_types.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/asm-generic/posix_types.h \
+ /mnt/c/sophpi/ipcamera/prebuilt/rtsp/musl_riscv64/include/rtsp.h \
+ /mnt/c/sophpi/ipcamera/prebuilt/rtsp/musl_riscv64/include/defs.h \
+ /mnt/c/sophpi/ipcamera/modules/common/include/app_ipcam_comm.h \
+ /mnt/c/sophpi/ipcamera/modules/media/include/venc/app_ipcam_venc.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/linux/cvi_comm_video.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/linux/cvi_comm_sys.h \
+ /mnt/c/sophpi/cvi_mpi/include/cvi_venc.h \
+ /mnt/c/sophpi/cvi_mpi/include/cvi_comm_vb.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/linux/cvi_errno.h \
+ /mnt/c/sophpi/cvi_mpi/include/cvi_debug.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/linux/cvi_comm_venc.h \
+ /mnt/c/sophpi/linux_5.10/build/sg2000_wevb_riscv64_sd/riscv/usr/include/linux/cvi_comm_rc.h
