@@ -1,7 +1,0 @@
-include $(SRCTREE)/build/rule.mk
-TARGET_DIR := $(TARGET_OUT_DIR)/lib
-TARGET_A := $(TARGET_DIR)/libapp_common.a
-
-SEXT	:= c
-SDIR	+= $(CURDIR)/src
-include $(SRCTREE)/build/build.mk
