@@ -1,0 +1,117 @@
+
+name: sync subtrees with upstream
+on:
+  schedule:
+    - cron: 10 */12 * * *
+  workflow_dispatch:
+
+concurrency: subtrees-sync
+
+jobs:
+  get-list:
+    name: Get the subtrees list
+    runs-on: ubuntu-latest
+    outputs:
+      list: ${{ steps.set-matrix.outputs.list }}
+    steps:
+      - name: checkout the default branch of this repo
+        uses: actions/checkout@v4
+        with:
+          path: 'sophpi'
+      - name: Set up Python '3.12'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+      - run: pip install -r ./sophpi/scripts/requirements.txt
+      - name: setup matrix variable
+        id: set-matrix
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_LOCAL_REPO_OWNER: ${{ github.repository_owner }}
+        run: ./sophpi/scripts/repos-list-for-sync.py
+
+  sync-upstream:
+    needs: get-list
+    runs-on: ubuntu-latest
+    if: always()
+    outputs:
+      finished: ${{ steps.set_output.outputs.my_value }}
+    continue-on-error: true
+    strategy:
+      matrix: ${{ fromJSON(needs.get-list.outputs.list) }}
+    name: sync for ${{ matrix.repo.name }}
+    env:
+      REPO_NAME: ${{ matrix.repo.name }}
+      REPO_OWNER: ${{ github.repository_owner }}
+      BRANCH_NAME: ${{ matrix.repo.branch }}
+      UPSTREAM_URL: ${{ matrix.repo.remote.url }}
+      REPO_STATUS: ${{ matrix.repo.status }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - name: Skip and warning repos with invalid status
+        run: |
+          if [[ $REPO_STATUS != "good" ]]; then
+            echo "Invalid status '$REPO_STATUS' for repo '$REPO_NAME'," >&2
+            echo "please check logs in the 'Get the subtrees list' job for more details." >&2
+            exit 1
+          fi
+      - name: Checkout the forked repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repo.local }}
+          ref: ${{ matrix.repo.branch }}
+          path: ${{ matrix.repo.name }}
+          fetch-depth: 0
+      - name: Add upstream repository
+        run: git -C $REPO_NAME remote add upstream "$UPSTREAM_URL"
+      - name: Fetch upstream changes
+        run: git -C $REPO_NAME fetch upstream $BRANCH_NAME
+      - name: Merge upstream changes
+        run: git -C $REPO_NAME merge upstream/$BRANCH_NAME --allow-unrelated-histories
+      - name: Push changes to forked repository
+        id: push-to
+        run: |
+          git -C $REPO_NAME config --unset-all http.https://github.com/.extraheader
+          git -C $REPO_NAME remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/$REPO_OWNER/$REPO_NAME.git
+          git -C $REPO_NAME push origin $BRANCH_NAME
+          echo "pushed=true" >> $GITHUB_OUTPUT
+      - name: Record status
+        id: record-status
+        if: always()
+        run: |
+          status=${{ steps.push-to.outputs.pushed }}
+          if [[ -z "$status" ]]; then
+            status=false
+          fi
+          echo "$status" > sync-stats.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sync-stats-${{ matrix.repo.name }}
+          path: sync-stats.txt
+
+  sync-stats:
+    needs: [get-list, sync-upstream]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: sync-stats.dir
+      - name: Show sync stats
+        run: |
+          exit_code=0
+          find sync-stats.dir -type f || true
+          while read -r file; do
+            status=$(cat "sync-stats.dir/$file/sync-stats.txt")
+            repo_name=${file#sync-stats-}
+            if [[ $status == "false" ]]; then
+              exit_code=1
+              echo -e "\x1b[31m'$repo_name' sync failed.\x1b[0m" >&2
+            fi
+          done <<<$(ls -1 sync-stats.dir/)
+          exit $exit_code
