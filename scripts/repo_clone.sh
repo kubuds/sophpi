@@ -79,7 +79,7 @@ done
 # 设置全局变量
 REMOTE_NAME=$(grep -o '<remote.*/>' ${xml_file} | sed 's/.*name="\([^"]*\)".*/\1/')
 DEFAULT_REVISION=$(grep -o '<default.*/>' ${xml_file} | sed 's/.*revision="\([^"]*\)".*/\1/')
-PARAMETERS="--single-branch --depth 2000"
+PARAMETERS="--single-branch"
 
 # git clone function
 function git_clone {
